@@ -3,7 +3,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 
 const Video = () => {
   const windowWidth = useWindowSize();
-  const videoSrc :string = Number(windowWidth) > 992 ? './bg-pc.MP4' : './bg.MOV'
+  const videoSrc :string = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.MOV'
   
   return (
     <VideoContainer>

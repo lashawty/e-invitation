@@ -42,9 +42,9 @@ table {
 }
 @font-face {
 	font-family: 'English';
-	src: url(./english.otf);
+	src: url(./fonts/english.otf);
 }
 @font-face {
 	font-family: 'Chinese';
-	src: url(./chinese.ttc);
+	src: url(./fonts/chinese.ttc);
 }
