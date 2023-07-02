@@ -4,10 +4,11 @@ import useWindowSize from '../../hooks/useWindowSize';
 const Video = () => {
   const windowWidth = useWindowSize();
   const videoSrc :string = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.MOV'
-  
+  const videoTag = document.querySelector('video');
+  const handlePlayVideo = videoTag?.play();
   return (
-    <VideoContainer>
-      <VideoTag src={videoSrc} muted autoPlay loop={true} />
+    <VideoContainer onClick={handlePlayVideo}>
+      <VideoTag src={videoSrc} muted autoPlay loop={true} preload="auto" />
     </VideoContainer>
   )
 };
