@@ -18,14 +18,9 @@ const Text = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const handlePlayVideo = () => {
-    const videoTag = document.querySelector('video');
-    videoTag?.play()
-    console.log(videoTag);
-    
-  };
+  
   return (
-    <TitleContainer onClick={handlePlayVideo}>
+    <TitleContainer>
       <Title>Sean & Chloe's Wedding</Title>
       <ButtonContainer>
         <CustomButton icon={<CalendarOutlined />} ghost={true} onClick={()=> {showModal('婚禮資訊', <p>圖片</p>)}} />
