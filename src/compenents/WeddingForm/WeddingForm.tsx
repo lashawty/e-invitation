@@ -10,7 +10,7 @@ const layout = {
 
 const WeddingForm = () => {
   const [form] = Form.useForm();
-
+  
   const isBringingKids = (value: string) => {
     switch (value) {
       case '是':
@@ -24,7 +24,7 @@ const WeddingForm = () => {
     }
   };
 
-  const isKidsTooMany = (value: string) => {
+  const isKidsTooMany = () => {
     const total = form.getFieldValue("Number");
     const kidsNumber = form.getFieldValue("ChildrenNumber")
     if(kidsNumber >= total) {
@@ -34,7 +34,8 @@ const WeddingForm = () => {
         ChildrenNumber: null,
       })
     }
-  }
+  };
+
   const isVeggie = (value: string) => {
     switch (value) {
       case '是':
@@ -60,7 +61,14 @@ const WeddingForm = () => {
         method: "POST",
         body: formData,
       }
-    ).then((res) => res.json())
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
       form.resetFields();
       localStorage.setItem("isFormFilled", "true");
   };
