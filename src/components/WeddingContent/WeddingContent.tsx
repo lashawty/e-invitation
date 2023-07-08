@@ -18,7 +18,7 @@ const VideoMesh = ({videoSrc, onClick, x}:IVideoMesh) => {
     <Float floatingRange={[0, 1]} speed={1.1} onClick={onClick} rotationIntensity={5}>
       <mesh position={[x, 0, 0]} scale={.3}>
           <sphereGeometry />
-          <meshBasicMaterial map={texture} toneMapped={false} />
+          <meshLambertMaterial map={texture} toneMapped={false} />
       </mesh>
     </Float>
   )
@@ -41,8 +41,8 @@ const WeddingContent = () => {
   return (
     <TitleContainer>
       <Canvas>
-        <directionalLight position={ [ 1, 2, 3 ] } intensity={ 1.5 } />
-        <ambientLight intensity={ 0.5 } />
+        <directionalLight position={ [ 1, 2, 3 ] } intensity={ 1 } />
+        <ambientLight intensity={ 0.1 } />
         <Sparkles />
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <VideoMesh videoSrc="./video/0.MP4" onClick={()=> {showModal('PlayList', <IFrame />)}} x={-1}/>
