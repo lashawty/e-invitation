@@ -1,11 +1,11 @@
-import Video from "./compenents/Video/Video"
-import Text from "./compenents/Text/Text"
+import Video from "./components/Video/Video"
+import WeddingContent from "./components/WeddingContent/WeddingContent"
 
 export default function App() {
 
   return (
     <>
-      <Text />
+      <WeddingContent />
       <Video />
     </>
   )

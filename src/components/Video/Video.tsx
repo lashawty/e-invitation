@@ -3,7 +3,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 
 const Video = () => {
   const windowWidth = useWindowSize();
-  const videoSrc :string = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.MOV'
+  const videoSrc :string = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.MOV';
   return (
     <VideoContainer>
       <VideoTag src={videoSrc} muted autoPlay playsInline={true} loop={true} preload="auto" />
@@ -18,9 +18,7 @@ const VideoTag = styled.video`
 `
 
 const VideoContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
   z-index: -1;
   width: 100vw;
   height: 100vh;
