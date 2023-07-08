@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {useState, ReactNode} from 'react';
-import {Sparkles, Stars, SpotLight, Float, useVideoTexture} from '@react-three/drei'
+import {Sparkles, Stars, Float, useVideoTexture} from '@react-three/drei'
 import {Modal} from 'antd';
 import WeddingForm from '../WeddingForm/WeddingForm';
 import IFrame from '../IFrame/IFrame'
