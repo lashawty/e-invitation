@@ -1,2 +1,7 @@
 node_modules
 dist
+/.idea/.gitignore
+/.idea/e-invitation.iml
+/.idea/modules.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml

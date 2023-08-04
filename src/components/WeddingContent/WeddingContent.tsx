@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {useState, ReactNode} from 'react';
-import {Sparkles, Stars, Float, useVideoTexture} from '@react-three/drei'
+import {Sparkles, Float, useVideoTexture} from '@react-three/drei'
 import {Modal} from 'antd';
 import WeddingForm from '../WeddingForm/WeddingForm';
 import IFrame from '../IFrame/IFrame'
@@ -14,7 +14,8 @@ interface IVideoMesh {
 
 const VideoMesh = ({videoSrc, onClick, x}:IVideoMesh) => {
   const texture = useVideoTexture(videoSrc)
-  return (
+    return (
+    // @ts-ignore
     <Float floatingRange={[0, 1]} speed={1.1} onClick={onClick} rotationIntensity={5}>
       <mesh position={[x, 0, 0]} scale={.3}>
           <sphereGeometry />
@@ -23,6 +24,7 @@ const VideoMesh = ({videoSrc, onClick, x}:IVideoMesh) => {
     </Float>
   )
 }
+
 
 const WeddingContent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,8 +45,8 @@ const WeddingContent = () => {
       <Canvas>
         <directionalLight position={ [ 1, 2, 3 ] } intensity={ 1 } />
         <ambientLight intensity={ 0.1 } />
+        {/*@ts-ignore*/}
         <Sparkles />
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <VideoMesh videoSrc="./video/0.MP4" onClick={()=> {showModal('PlayList', <IFrame />)}} x={-1}/>
         <VideoMesh videoSrc="./video/1.MP4" onClick={()=> {showModal('婚禮表單', <WeddingForm />)}} x={0}/>
         <VideoMesh videoSrc="./video/2.MP4" onClick={()=> {showModal('婚禮資訊', <p>圖片</p>)}} x={1}/>
@@ -65,20 +67,21 @@ const Title = styled.h1`
   position: absolute;
   top: 100px;
   left: 50%;
-  transform: translate(-50%, 0);
   width: 100%;
-  text-align: center;
-  font-family: 'English';
+  font-family: 'English', sans-serif;
   font-size: max(5vw, 24px);
+  color: #fff;
+  text-align: center;
+  transform: translate(-50%, 0);
 `
 
 const TitleContainer = styled.div`
   position: absolute;
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
 `
 

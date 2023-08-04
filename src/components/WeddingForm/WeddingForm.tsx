@@ -160,9 +160,9 @@ const WeddingForm = () => {
 export default WeddingForm;
 
 const ButtonContainer = styled.div`
-  margin-bottom: 20px;
   display: flex;
-  justify-content: center;
+  gap: 10px;
   align-items: center;
-  gap: 10px
+  justify-content: center;
+  margin-bottom: 20px;
 `
