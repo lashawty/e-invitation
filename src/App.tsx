@@ -1,14 +1,13 @@
-import Video from "./components/Video/Video"
 import WeddingContent from "./components/WeddingContent/WeddingContent"
-import {Suspense} from 'react';
-import Loading from "./components/Loading/Loading";
-
-export default function App() {
+import Title from './components/Title/Title.tsx';
+const App = () => {
 
   return (
-    <Suspense fallback={<Loading />}>
-      <WeddingContent />
-      <Video />
-    </Suspense>
+      <>
+          <Title />
+          <WeddingContent />
+      </>
   )
 }
+
+export default App;

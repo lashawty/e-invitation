@@ -1,12 +1,26 @@
 import styled from 'styled-components';
 import {useState, ReactNode} from 'react';
-import {Sparkles} from '@react-three/drei'
+import {Sparkles, useVideoTexture, SpotLight} from '@react-three/drei'
 import {Modal} from 'antd';
 import {FormOutlined, YoutubeOutlined, CalendarOutlined} from '@ant-design/icons';
 import WeddingForm from '../WeddingForm/WeddingForm';
 import IFrame from '../IFrame/IFrame'
-import {Canvas} from '@react-three/fiber'
+import {Canvas, useThree} from '@react-three/fiber'
+import useWindowSize from '../../hooks/useWindowSize';
 
+const VideoMesh = () => {
+    const windowWidth = useWindowSize()
+    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.MOV';
+    const texture = useVideoTexture(videoUrl);
+    const three = useThree();
+    const {width, height} = three.viewport;
+    return(
+        <mesh>
+            <meshStandardMaterial map={texture} toneMapped={false}/>
+            <planeGeometry args={[width, height, 1]}></planeGeometry>
+        </mesh>
+    )
+}
 
 const WeddingContent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,10 +39,12 @@ const WeddingContent = () => {
   return (
     <TitleContainer>
       <Canvas>
+          <ambientLight intensity={0.4} />
         <Sparkles />
+        <VideoMesh/>
       </Canvas>
       
-      <Title>Sean & Chloe's Wedding</Title>
+
       <SvgContainer>
         <FormOutlined onClick={()=> showModal('婚禮表單', <WeddingForm />)}/>
         <CalendarOutlined onClick={()=> showModal('婚禮資訊', <p>圖片</p>)}/>
@@ -44,26 +60,17 @@ const WeddingContent = () => {
 export default WeddingContent;
 
 
-const Title = styled.h1`
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  width: 100%;
-  font-family: 'English', sans-serif;
-  font-size: max(5vw, 24px);
-  color: #fff;
-  text-align: center;
-  transform: translate(-50%, 0);
-`
+
 
 const SvgContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
   display: flex;
   gap: 20px;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
   font-size: 30px;
