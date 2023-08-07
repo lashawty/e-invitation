@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {useState, ReactNode} from 'react';
-import {Sparkles, useVideoTexture} from '@react-three/drei'
+import {Sparkles, useVideoTexture, SpotLight} from '@react-three/drei'
 import {Modal} from 'antd';
 import {FormOutlined, YoutubeOutlined, CalendarOutlined} from '@ant-design/icons';
 import WeddingForm from '../WeddingForm/WeddingForm';
@@ -36,10 +36,19 @@ const WeddingContent = () => {
     setIsModalOpen(false);
   };
 
-  return (
+  // @ts-ignore
+    return (
     <TitleContainer>
       <Canvas>
-          <ambientLight intensity={0.4} />
+          <ambientLight intensity={0.03} />
+          {/*@ts-ignore*/}
+          <SpotLight
+              position-y={2.5}
+              distance={10}
+              angle={0.45}
+              attenuation={8}
+              anglePower={5} // Diffuse-cone anglePower (default: 5)
+          />
         <Sparkles />
         <VideoMesh/>
       </Canvas>
