@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {useState, ReactNode} from 'react';
-import {Sparkles, useVideoTexture, SpotLight} from '@react-three/drei'
+import {Sparkles, useVideoTexture} from '@react-three/drei'
 import {Modal} from 'antd';
 import {FormOutlined, YoutubeOutlined, CalendarOutlined} from '@ant-design/icons';
 import WeddingForm from '../WeddingForm/WeddingForm';
