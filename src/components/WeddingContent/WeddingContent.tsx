@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {useState, ReactNode} from 'react';
-import {Sparkles, useVideoTexture, SpotLight} from '@react-three/drei'
+import {Sparkles, useVideoTexture} from '@react-three/drei'
 import {Modal} from 'antd';
 import {FormOutlined, YoutubeOutlined, CalendarOutlined} from '@ant-design/icons';
 import WeddingForm from '../WeddingForm/WeddingForm';
@@ -10,13 +10,13 @@ import useWindowSize from '../../hooks/useWindowSize';
 
 const VideoMesh = () => {
     const windowWidth = useWindowSize()
-    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.MOV';
+    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.mov';
     const texture = useVideoTexture(videoUrl);
     const three = useThree();
     const {width, height} = three.viewport;
     return(
         <mesh>
-            <meshStandardMaterial map={texture} toneMapped={false}/>
+            <meshBasicMaterial map={texture} toneMapped={false} needsUpdate={true}/>
             <planeGeometry args={[width, height, 1]}></planeGeometry>
         </mesh>
     )
@@ -40,15 +40,6 @@ const WeddingContent = () => {
     return (
     <TitleContainer>
       <Canvas>
-          <ambientLight intensity={0.03} />
-          {/*@ts-ignore*/}
-          <SpotLight
-              position-y={2.5}
-              distance={10}
-              angle={0.45}
-              attenuation={8}
-              anglePower={5} // Diffuse-cone anglePower (default: 5)
-          />
         <Sparkles />
         <VideoMesh/>
       </Canvas>
