@@ -10,7 +10,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 
 const VideoMesh = () => {
     const windowWidth = useWindowSize()
-    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg.mov';
+    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
     const texture = useVideoTexture(videoUrl);
     const three = useThree();
     const {width, height} = three.viewport;
