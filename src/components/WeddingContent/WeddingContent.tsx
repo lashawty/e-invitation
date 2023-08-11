@@ -63,7 +63,9 @@ const WeddingContent = ({handleVideo}:IProps) => {
     }
 
     const handleVideoError = () => {
+        console.log('???');
         setIsVideoError(true)
+        handleVideo()
         const video = videoRef.current;
         let startPlayPromise = video?.play();
 
@@ -93,7 +95,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
             controls={false}
             onPlay={handleVideo}
             isVideoError={isVideoError}
-            onPause={handleVideoError}
+            onCanPlayThrough={handleVideoError}
         />
         <Canvas>
             <Sparkles />
