@@ -91,7 +91,9 @@ const SvgContainer = styled.div`
 `
 
 const TitleContainer = styled.div`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
