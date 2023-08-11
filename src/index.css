@@ -54,18 +54,10 @@ body,
 }
 
 /* 隐藏 video 播放按钮 */
-video::-webkit-media-controls-overlay-play-button,
-video::-webkit-media-controls-start-playback-button {
+.media-controls-container{
 	display: none !important;
 }
 
-video::-webkit-media-controls-play-button,
-video::-webkit-media-controls-volume-slider,
-video::-webkit-media-controls-mute-button,
-video::-webkit-media-controls-timeline {
-	/* 你可以根据需要进行样式调整 */
-	display: none !important;
-}
 
 
 @font-face {
