@@ -42,6 +42,7 @@ const H1 = styled.h1<{
   color: #fff;
   text-align: center;
   transition: transform 2s ease-in-out;
+  transition-delay: 2s;
   transform: translateY(${props => props.isVideoReady ? '-200px' : '0' });
 `
 
@@ -57,6 +58,7 @@ const Container = styled.div<{
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  pointer-events: ${props => props.isVideoReady ? 'none' : 'auto'};
   background: ${props => props.isVideoReady ? 'transparent' : '#000'};
-  transition: background 1s;
+  transition: background 2s 4s;
 `

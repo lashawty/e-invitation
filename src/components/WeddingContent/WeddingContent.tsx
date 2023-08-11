@@ -63,6 +63,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
     }
 
     const handleVideoError = () => {
+        handleVideo()
         const video = videoRef.current;
         let startPlayPromise = video?.play();
 
@@ -89,7 +90,6 @@ const WeddingContent = ({handleVideo}:IProps) => {
             muted={true}
             loop={true}
             controls={false}
-            onLoadedMetadata={handleVideo}
             onPlay={handleVideoError}
             isVideoError={isVideoError}
         />
