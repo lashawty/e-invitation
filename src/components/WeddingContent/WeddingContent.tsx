@@ -25,7 +25,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
     const windowWidth = useWindowSize();
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const bgUrl = Number(windowWidth) > 992 ? './image/bg-pc.gif' : './image/bg-mobile.gif';
-    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
+    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mp4';
     const initialModalState: IModalState = {
         isOpen: false,
         title: '',
@@ -63,7 +63,6 @@ const WeddingContent = ({handleVideo}:IProps) => {
     }
 
     const handleVideoError = () => {
-        console.log('???');
         setIsVideoError(true)
         handleVideo()
         const video = videoRef.current;
