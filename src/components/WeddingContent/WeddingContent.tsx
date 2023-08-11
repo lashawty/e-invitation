@@ -61,7 +61,6 @@ const WeddingContent = () => {
         if(videoRef) {
             videoRef?.current?.addEventListener('loadedmetadata', () => {
                 setIsVideoReady(true);
-                videoRef?.current?.play();
             })
         }
     }, [videoRef]);
@@ -73,6 +72,7 @@ const WeddingContent = () => {
             title,
             content,
         })
+        videoRef?.current?.play();
     };
 
 
