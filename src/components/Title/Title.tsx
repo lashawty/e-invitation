@@ -3,13 +3,17 @@ import styled from 'styled-components';
 
 const title = `Sean & Chloe's Wedding`;
 const letters = title.split('')
-
+interface IProps {
+    isVideoReady: boolean
+}
 const Letters = () => letters.map((row, index) => <Letter key={index} Index={index}>{row}</Letter>)
 
-const Title = () => {
+const Title = ({
+    isVideoReady
+}: IProps) => {
     return(
-        <H1>
-            <Letters />
+        <H1 isVideoReady={isVideoReady}>
+            <Letters/>
         </H1>
     )
 }
@@ -22,9 +26,11 @@ const Letter = styled.span<{
   transition-delay: ${props => props.Index * .4}s ;
 `
 
-const H1 = styled.h1`
+const H1 = styled.h1<{
+    isVideoReady: boolean
+}>`
   position: fixed;
-  top: 100px;
+  top: 100px; 
   left: 50%;
   z-index: 99;
   width: 100%;
@@ -33,5 +39,5 @@ const H1 = styled.h1`
   color: #fff;
   text-align: center;
   transition: transform 2s ease-in-out;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, ${props => props.isVideoReady ? '0' : 'calc(-50% + 100px)'});
 `

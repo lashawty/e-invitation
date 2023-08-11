@@ -1,11 +1,13 @@
 import WeddingContent from "./components/WeddingContent/WeddingContent"
 import Title from './components/Title/Title.tsx';
+import {useState} from 'react';
 const App = () => {
-
+    const [isVideoReady, setIsVideoReady] = useState(false);
+    const handleVideo = () => setIsVideoReady(true);
   return (
       <>
-          <Title />
-          <WeddingContent />
+          <Title isVideoReady={isVideoReady}/>
+          <WeddingContent handleVideo={handleVideo}/>
       </>
   )
 }

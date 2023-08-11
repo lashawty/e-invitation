@@ -20,12 +20,14 @@ const initialModalState: IModalState = {
     content: null
 };
 
-
-const WeddingContent = () => {
+interface IProps {
+    handleVideo: () => void
+}
+const WeddingContent = ({handleVideo}:IProps) => {
     const windowWidth = useWindowSize();
     const bgUrl = Number(windowWidth) > 992 ? './image/bg-pc.gif' : './image/bg-mobile.gif';
+    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
     const [modalState, setModalState] = useState(initialModalState);
-
 
     const showModal = (title: string, content: ReactNode) => {
         setModalState({
@@ -44,8 +46,8 @@ const WeddingContent = () => {
     };
 
     return (
-    <TitleContainer bgUrl={bgUrl}>
-
+    <TitleContainer>
+        <Video src={videoUrl} autoPlay={true} playsInline={true} poster={bgUrl} muted={true} onLoadedMetadata={handleVideo}></Video>
         <Canvas>
             <Sparkles />
         </Canvas>
@@ -65,7 +67,13 @@ export default WeddingContent;
 
 
 
-
+const Video = styled.video`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+`
 
 const SvgContainer = styled.div`
   position: absolute;
@@ -82,9 +90,7 @@ const SvgContainer = styled.div`
   color: #fff;
 `
 
-const TitleContainer = styled.div<{
-    bgUrl: string,
-}>`
+const TitleContainer = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -92,7 +98,5 @@ const TitleContainer = styled.div<{
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-image: url(${props => props.bgUrl});
-  background-size: cover;
 `
 
