@@ -1,54 +1,111 @@
 import styled from 'styled-components';
-import {useState, ReactNode} from 'react';
-import {Sparkles, useVideoTexture} from '@react-three/drei'
+import {useState, ReactNode, useRef, useEffect} from 'react';
+import {Sparkles} from '@react-three/drei'
 import {Modal} from 'antd';
-import {FormOutlined, YoutubeOutlined, CalendarOutlined} from '@ant-design/icons';
+import {FormOutlined} from '@ant-design/icons';
 import WeddingForm from '../WeddingForm/WeddingForm';
-import IFrame from '../IFrame/IFrame'
 import {Canvas, useThree} from '@react-three/fiber'
 import useWindowSize from '../../hooks/useWindowSize';
+import {VideoTexture} from 'three';
+import {vertexShader, fragmentShader} from './shader.ts';
 
-const VideoMesh = () => {
-    const windowWidth = useWindowSize()
-    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
-    const texture = useVideoTexture(videoUrl);
-    const three = useThree();
-    const {width, height} = three.viewport;
-    return(
+//types
+type TVideo = HTMLVideoElement | null
+interface IVideoComponentProps {
+    video: TVideo,
+}
+// interface ITransparentVideoProps {
+//     filePath: string,
+// }
+
+const VideoMesh = ({video}: IVideoComponentProps) => {
+    // const windowWidth = useWindowSize()
+    // const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
+    // const texture = useVideoTexture(videoUrl);
+    // const three = useThree();
+    // const {width, height} = three.viewport;
+    // return(
+    //     <mesh>
+    //         <meshBasicMaterial map={texture} toneMapped={false} needsUpdate={true}/>
+    //         <planeGeometry args={[width, height, 1]}></planeGeometry>
+    //     </mesh>
+    // )
+    if(video === null) return null;
+
+    // 載入影片紋理
+    const videoTexture = new VideoTexture(video);
+
+    // 將影片紋理透過uniforms傳給shaders
+    const uniforms = {
+        uTexture: { value: videoTexture }
+    }
+
+    //設定形狀大小與Canvas外觀相等，請看下方詳解
+    const {width, height} = useThree((state) => state.viewport)
+    return (
         <mesh>
-            <meshBasicMaterial map={texture} toneMapped={false} needsUpdate={true}/>
-            <planeGeometry args={[width, height, 1]}></planeGeometry>
+            <planeGeometry args={[width, height, 1]}/>
+            <shaderMaterial uniforms={uniforms} vertexShader={vertexShader} fragmentShader={fragmentShader}/>
         </mesh>
     )
 }
 
+// const TransparentVideo = ({filePath}: ITransparentVideoProps) => {
+//     const videoRef = useRef<TVideo>(null);
+//     const [isVideoReady, setIsVideoReady] = useState(false);
+//     useEffect(()=>{
+//         if(videoRef) {
+//             setIsVideoReady(true);
+//         }
+//     }, [videoRef])
+//
+//     return (
+//         <Container>
+//             <video src={filePath} ref={videoRef} autoPlay={true} muted={true} loop={true}></video>
+//             <Canvas gl={{antialias: false}}>
+//                 {isVideoReady && <VideoComponent video={videoRef.current}/>}
+//             </Canvas>
+//         </Container>
+//     );
+// };
+
+
 const WeddingContent = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalContent, setModalContent] = useState<null | ReactNode>(null);
-  const showModal = (title: string, content: ReactNode) => {
+    const windowWidth = useWindowSize()
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalContent, setModalContent] = useState<null | ReactNode>(null);
+    const videoRef = useRef<TVideo>(null);
+    const [isVideoReady, setIsVideoReady] = useState(false);
+
+    useEffect(()=>{
+        if(videoRef) {
+            setIsVideoReady(true);
+        }
+    }, [videoRef])
+    const showModal = (title: string, content: ReactNode) => {
     setIsModalOpen(true);
     setModalTitle(title);
     setModalContent(content);
-  };
-
-  const closeModal = () => {
+    };
+    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
+    const closeModal = () => {
     setIsModalOpen(false);
-  };
+    };
 
-  // @ts-ignore
     return (
     <TitleContainer>
+        <Video src={videoUrl} ref={videoRef} autoPlay={true} muted={true} loop={true}></Video>
       <Canvas>
         <Sparkles />
-        <VideoMesh/>
+          {isVideoReady && <VideoMesh video={videoRef.current}/>}
       </Canvas>
       
 
       <SvgContainer>
         <FormOutlined onClick={()=> showModal('婚禮表單', <WeddingForm />)}/>
-        <CalendarOutlined onClick={()=> showModal('婚禮資訊', <p>圖片</p>)}/>
-        <YoutubeOutlined onClick={()=> showModal('PlayList', <IFrame />)}/>
+        {/*<CalendarOutlined onClick={()=> showModal('婚禮資訊', <p>圖片</p>)}/>*/}
+        {/*<YoutubeOutlined onClick={()=> showModal('PlayList', <IFrame />)}/>*/}
       </SvgContainer>
       <Modal title={modalTitle} open={isModalOpen} onCancel={closeModal} footer={null}>
         {modalContent}
@@ -60,6 +117,11 @@ const WeddingContent = () => {
 export default WeddingContent;
 
 
+const Video = styled.video`
+  position: absolute;
+  width: 0;
+  opacity: 0;
+`
 
 
 const SvgContainer = styled.div`
