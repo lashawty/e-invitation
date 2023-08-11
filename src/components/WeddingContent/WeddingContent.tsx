@@ -63,7 +63,6 @@ const WeddingContent = ({handleVideo}:IProps) => {
     }
 
     const handleVideoError = () => {
-        setIsVideoError(true)
         handleVideo()
         const video = videoRef.current;
         let startPlayPromise = video?.play();
@@ -75,8 +74,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
                 })
                 .catch((error) => {
                     if (error.name === "NotAllowedError") {
-                        // setIsVideoError(true)/
-                        console.log('not allowed');
+                        setIsVideoError(true)
                     }
                 });
         }
