@@ -6,19 +6,17 @@ import {FormOutlined} from '@ant-design/icons';
 import WeddingForm from '../WeddingForm/WeddingForm';
 import {Canvas} from '@react-three/fiber'
 import useWindowSize from '../../hooks/useWindowSize';
+import Success from '../WeddingForm/Success.tsx';
 
 //types
 interface IModalState {
     isOpen: boolean;
     title: string;
     content: ReactNode | null;
+    isFormSubmit: boolean;
 }
 
-const initialModalState: IModalState = {
-    isOpen: false,
-    title: '',
-    content: null
-};
+
 
 interface IProps {
     handleVideo: () => void
@@ -27,10 +25,17 @@ const WeddingContent = ({handleVideo}:IProps) => {
     const windowWidth = useWindowSize();
     const bgUrl = Number(windowWidth) > 992 ? './image/bg-pc.gif' : './image/bg-mobile.gif';
     const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
+    const initialModalState: IModalState = {
+        isOpen: false,
+        title: '',
+        content: null,
+        isFormSubmit: !!localStorage.getItem('isFormFilled'),
+    };
     const [modalState, setModalState] = useState(initialModalState);
 
     const showModal = (title: string, content: ReactNode) => {
         setModalState({
+            ...modalState,
             isOpen: true,
             title,
             content,
@@ -45,21 +50,31 @@ const WeddingContent = ({handleVideo}:IProps) => {
         })
     };
 
+
+    const handleSuccess = () => {
+        setModalState({
+            ...modalState,
+            isOpen: true,
+            isFormSubmit: true,
+            content: <Success/>,
+        })
+        localStorage.setItem("isFormFilled", "true");
+    }
     return (
-    <TitleContainer>
+    <Container>
         <Video src={videoUrl} autoPlay={true} playsInline={true} poster={bgUrl} muted={true} onLoadedMetadata={handleVideo} loop={true} controls={false}></Video>
         <Canvas>
             <Sparkles />
         </Canvas>
 
         <SvgContainer>
-            <FormOutlined onClick={()=> showModal('婚禮表單', <WeddingForm />)}/>
+            <FormOutlined onClick={()=> showModal('婚禮表單', <WeddingForm onSuccess={handleSuccess}/>)}/>
         </SvgContainer>
 
         <Modal title={modalState.title} open={modalState.isOpen} onCancel={closeModal} footer={null}>
-            {modalState.content}
+            {modalState.isFormSubmit ? <Success /> : modalState.content}
         </Modal>
-    </TitleContainer>
+    </Container>
   )
 }
 
@@ -92,7 +107,7 @@ const SvgContainer = styled.div`
   color: #fff;
 `
 
-const TitleContainer = styled.div`
+const Container = styled.div`
   position: fixed;
   top: 0;
   left: 0;

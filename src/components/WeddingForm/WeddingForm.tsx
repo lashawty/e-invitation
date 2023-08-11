@@ -8,7 +8,14 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-const WeddingForm = () => {
+
+interface IProps {
+  onSuccess: () => void,
+}
+
+const WeddingForm = ({
+    onSuccess
+}: IProps) => {
   const [form] = Form.useForm();
   
   const isBringingKids = (value: string) => {
@@ -70,7 +77,7 @@ const WeddingForm = () => {
         console.log(error);
       });
       form.resetFields();
-      localStorage.setItem("isFormFilled", "true");
+      onSuccess();
   };
 
   const onReset = () => {
