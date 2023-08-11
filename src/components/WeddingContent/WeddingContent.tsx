@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {useState, ReactNode} from 'react';
+import {useState, ReactNode, useRef} from 'react';
 import {Sparkles} from '@react-three/drei'
 import {Modal} from 'antd';
 import {FormOutlined} from '@ant-design/icons';
@@ -23,6 +23,7 @@ interface IProps {
 }
 const WeddingContent = ({handleVideo}:IProps) => {
     const windowWidth = useWindowSize();
+    const videoRef = useRef<HTMLVideoElement | null>(null);
     const bgUrl = Number(windowWidth) > 992 ? './image/bg-pc.gif' : './image/bg-mobile.gif';
     const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
     const initialModalState: IModalState = {
@@ -32,7 +33,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
         isFormSubmit: !!localStorage.getItem('isFormFilled'),
     };
     const [modalState, setModalState] = useState(initialModalState);
-
+    const [isVideoError, setIsVideoError] = useState(false);
     const showModal = (title: string, content: ReactNode) => {
         setModalState({
             ...modalState,
@@ -60,9 +61,38 @@ const WeddingContent = ({handleVideo}:IProps) => {
         })
         localStorage.setItem("isFormFilled", "true");
     }
+
+    const handleVideoError = () => {
+        const video = videoRef.current;
+        let startPlayPromise = video?.play();
+
+        if (startPlayPromise !== undefined) {
+            startPlayPromise
+                .then(() => {
+                    console.log('video is playing!')
+                })
+                .catch((error) => {
+                    if (error.name === "NotAllowedError") {
+                        setIsVideoError(true)
+                    }
+                });
+        }
+    }
     return (
-    <Container>
-        <Video src={videoUrl} autoPlay={true} playsInline={true} poster={bgUrl} muted={true} onLoadedMetadata={handleVideo} loop={true} controls={false}></Video>
+    <Container isVideoError={isVideoError}>
+        <Video
+            ref={videoRef}
+            src={videoUrl}
+            autoPlay={true}
+            playsInline={true}
+            poster={bgUrl}
+            muted={true}
+            loop={true}
+            controls={false}
+            onLoadedMetadata={handleVideo}
+            onPlay={handleVideoError}
+            isVideoError={isVideoError}
+        />
         <Canvas>
             <Sparkles />
         </Canvas>
@@ -82,12 +112,15 @@ export default WeddingContent;
 
 
 
-const Video = styled.video`
+const Video = styled.video<{
+    isVideoError: boolean;
+}>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  &-webkit-media-controls-play-button{
+  visibility: ${props => props.isVideoError ? 'hidden' : 'visible'};
+  .media-controls-play-button{
     display: none;
   }
 `
@@ -107,7 +140,9 @@ const SvgContainer = styled.div`
   color: #fff;
 `
 
-const Container = styled.div`
+const Container = styled.div<{
+    isVideoError: boolean
+}>`
   position: fixed;
   top: 0;
   left: 0;
@@ -117,5 +152,7 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  background-image: url(${props => props.isVideoError ? './image/loading.jpg' : ''});
+  background-size: cover;
 `
 

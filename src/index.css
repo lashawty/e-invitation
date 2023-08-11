@@ -54,7 +54,7 @@ body,
 }
 
 /* 隐藏 video 播放按钮 */
-video>.media-controls-container{
+video .media-controls-container{
 	display: none !important;
 }
 
