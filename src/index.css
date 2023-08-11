@@ -64,7 +64,3 @@ video .media-controls-container{
 	font-family: 'English';
 	src: url(../fonts/english.otf);
 }
-@font-face {
-	font-family: 'Chinese';
-	src: url(../fonts/chinese.ttc);
-}

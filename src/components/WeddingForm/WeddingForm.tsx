@@ -18,30 +18,30 @@ const WeddingForm = ({
 }: IProps) => {
   const [form] = Form.useForm();
   
-  const isBringingKids = (value: string) => {
-    switch (value) {
-      case '是':
-        form.setFieldsValue({ Children: '是'});
-        break;
-      case '否':
-        form.setFieldsValue({ Children: '否'});
-        form.setFieldsValue({ ChildrenNumber: 0});
-        break;
-      default:
-    }
-  };
+  // const isBringingKids = (value: string) => {
+  //   switch (value) {
+  //     case '是':
+  //       form.setFieldsValue({ Children: '是'});
+  //       break;
+  //     case '否':
+  //       form.setFieldsValue({ Children: '否'});
+  //       form.setFieldsValue({ ChildrenNumber: 0});
+  //       break;
+  //     default:
+  //   }
+  // };
 
-  const isKidsTooMany = () => {
-    const total = form.getFieldValue("Number");
-    const kidsNumber = form.getFieldValue("ChildrenNumber")
-    if(kidsNumber >= total) {
-      alert('請確認用餐人數及兒童座椅數量')
-      form.setFieldsValue({
-        Number: null,
-        ChildrenNumber: null,
-      })
-    }
-  };
+  // const isKidsTooMany = () => {
+  //   const total = form.getFieldValue("Number");
+  //   const kidsNumber = form.getFieldValue("ChildrenNumber")
+  //   if(kidsNumber >= total) {
+  //     alert('請確認用餐人數及兒童座椅數量')
+  //     form.setFieldsValue({
+  //       Number: null,
+  //       ChildrenNumber: null,
+  //     })
+  //   }
+  // };
 
   const isVeggie = (value: string) => {
     switch (value) {
@@ -102,44 +102,42 @@ const WeddingForm = ({
       <Form.Item name="Number" label="今天幾位用餐？" rules={[{ required: true }]}>
         <Select
             placeholder="請選擇人數"
-            onChange={isBringingKids}
+            // onChange={isBringingKids}
             allowClear
           >
             <Option value={1}>林北一位</Option>
             <Option value={2}>我要攜伴</Option>
         </Select>
       </Form.Item>
-      <Form.Item name="Children" label="是否需要兒童座椅？" rules={[{ required: true }]}>
-        <Select
-          placeholder="今天要顧小孩嗎？"
-          onChange={isBringingKids}
-          allowClear
-        >
-          <Option value="是">是</Option>
-          <Option value="否">否</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.children !== currentValues.children}
-      >
-        {({ getFieldValue }) =>
-          getFieldValue('Children') === '是' ? (
-            <Form.Item name="ChildrenNumber" label="需要幾張兒童座椅？" rules={[{ required: true }]}>
-              <Select
-                placeholder="請選擇張數"
-                onChange={isKidsTooMany}
-                allowClear
-              >
-            <Option value={1}>一張就好：）</Option>
-            <Option value={2}>兩張，謝謝</Option>
-            <Option value={3}>三張？辛苦你了！</Option>
-            <Option value={4}>四張？這麼會生？</Option>
-        </Select>
-            </Form.Item>
-          ) : null
-        }
-      </Form.Item>
+      {/*<Form.Item name="Children" label="是否需要兒童座椅？" rules={[{ required: true }]}>*/}
+      {/*  <Select*/}
+      {/*    placeholder="今天要顧小孩嗎？"*/}
+      {/*    onChange={isBringingKids}*/}
+      {/*    allowClear*/}
+      {/*  >*/}
+      {/*    <Option value="是">是</Option>*/}
+      {/*    <Option value="否">否</Option>*/}
+      {/*  </Select>*/}
+      {/*</Form.Item>*/}
+      {/*<Form.Item*/}
+      {/*  noStyle*/}
+      {/*  shouldUpdate={(prevValues, currentValues) => prevValues.children !== currentValues.children}*/}
+      {/*>*/}
+      {/*  {({ getFieldValue }) =>*/}
+      {/*    getFieldValue('Children') === '是' ? (*/}
+      {/*      <Form.Item name="ChildrenNumber" label="需要幾張兒童座椅？" rules={[{ required: true }]}>*/}
+      {/*        <Select*/}
+      {/*          placeholder="請選擇張數"*/}
+      {/*          onChange={isKidsTooMany}*/}
+      {/*          allowClear*/}
+      {/*        >*/}
+      {/*      <Option value={1}>一張就好：）</Option>*/}
+      {/*      <Option value={2}>兩張，謝謝</Option>*/}
+      {/*  </Select>*/}
+      {/*      </Form.Item>*/}
+      {/*    ) : null*/}
+      {/*  }*/}
+      {/*</Form.Item>*/}
       <Form.Item name="Veggie" label="你吃素嗎？" rules={[{ required: true }]}>
         <Select
           placeholder="吃素嗎？還是今天要吃肉一下？"
