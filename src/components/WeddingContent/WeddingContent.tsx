@@ -47,7 +47,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
 
     return (
     <TitleContainer>
-        <Video src={videoUrl} autoPlay={true} playsInline={true} poster={bgUrl} muted={true} onLoadedMetadata={handleVideo}></Video>
+        <Video src={videoUrl} autoPlay={true} playsInline={true} poster={bgUrl} muted={true} onLoadedMetadata={handleVideo} loop={true}></Video>
         <Canvas>
             <Sparkles />
         </Canvas>
