@@ -88,79 +88,87 @@ const WeddingForm = ({
     required: "這裡沒填到 回來重填！",
   }
   return (
-    <Form
-      {...layout}
-      form={form}
-      name="control-hooks"
-      onFinish={onFinish}
-      style={{ width: '100%' }}
-      validateMessages={validateMessages}
-    >
-      <Form.Item name="Name" label="姓名" rules={[{ required: true }]}>
-        <Input placeholder='報上名來！'/>
-      </Form.Item>
-      <Form.Item name="Number" label="今天幾位用餐？" rules={[{ required: true }]}>
-        <Select
-            placeholder="請選擇人數"
-            // onChange={isBringingKids}
+      <>
+        <Text>日期：2023.10.15</Text>
+        <Text>地點：心之芳庭</Text>
+        <Form
+          {...layout}
+          form={form}
+          name="control-hooks"
+          onFinish={onFinish}
+          style={{ width: '100%', marginTop: '5px'}}
+          validateMessages={validateMessages}
+        >
+        <Form.Item name="Name" label="姓名" rules={[{ required: true }]}>
+          <Input placeholder='報上名來！'/>
+        </Form.Item>
+        <Form.Item name="Number" label="今天幾位用餐？" rules={[{ required: true }]}>
+          <Select
+              placeholder="請選擇人數"
+              // onChange={isBringingKids}
+              allowClear
+            >
+              <Option value={1}>林北一位</Option>
+              <Option value={2}>我要攜伴</Option>
+          </Select>
+        </Form.Item>
+        {/*<Form.Item name="Children" label="是否需要兒童座椅？" rules={[{ required: true }]}>*/}
+        {/*  <Select*/}
+        {/*    placeholder="今天要顧小孩嗎？"*/}
+        {/*    onChange={isBringingKids}*/}
+        {/*    allowClear*/}
+        {/*  >*/}
+        {/*    <Option value="是">是</Option>*/}
+        {/*    <Option value="否">否</Option>*/}
+        {/*  </Select>*/}
+        {/*</Form.Item>*/}
+        {/*<Form.Item*/}
+        {/*  noStyle*/}
+        {/*  shouldUpdate={(prevValues, currentValues) => prevValues.children !== currentValues.children}*/}
+        {/*>*/}
+        {/*  {({ getFieldValue }) =>*/}
+        {/*    getFieldValue('Children') === '是' ? (*/}
+        {/*      <Form.Item name="ChildrenNumber" label="需要幾張兒童座椅？" rules={[{ required: true }]}>*/}
+        {/*        <Select*/}
+        {/*          placeholder="請選擇張數"*/}
+        {/*          onChange={isKidsTooMany}*/}
+        {/*          allowClear*/}
+        {/*        >*/}
+        {/*      <Option value={1}>一張就好：）</Option>*/}
+        {/*      <Option value={2}>兩張，謝謝</Option>*/}
+        {/*  </Select>*/}
+        {/*      </Form.Item>*/}
+        {/*    ) : null*/}
+        {/*  }*/}
+        {/*</Form.Item>*/}
+        <Form.Item name="Veggie" label="你吃素嗎？" rules={[{ required: true }]}>
+          <Select
+            placeholder="吃素嗎？還是今天要吃肉一下？"
+            onChange={isVeggie}
             allowClear
           >
-            <Option value={1}>林北一位</Option>
-            <Option value={2}>我要攜伴</Option>
-        </Select>
-      </Form.Item>
-      {/*<Form.Item name="Children" label="是否需要兒童座椅？" rules={[{ required: true }]}>*/}
-      {/*  <Select*/}
-      {/*    placeholder="今天要顧小孩嗎？"*/}
-      {/*    onChange={isBringingKids}*/}
-      {/*    allowClear*/}
-      {/*  >*/}
-      {/*    <Option value="是">是</Option>*/}
-      {/*    <Option value="否">否</Option>*/}
-      {/*  </Select>*/}
-      {/*</Form.Item>*/}
-      {/*<Form.Item*/}
-      {/*  noStyle*/}
-      {/*  shouldUpdate={(prevValues, currentValues) => prevValues.children !== currentValues.children}*/}
-      {/*>*/}
-      {/*  {({ getFieldValue }) =>*/}
-      {/*    getFieldValue('Children') === '是' ? (*/}
-      {/*      <Form.Item name="ChildrenNumber" label="需要幾張兒童座椅？" rules={[{ required: true }]}>*/}
-      {/*        <Select*/}
-      {/*          placeholder="請選擇張數"*/}
-      {/*          onChange={isKidsTooMany}*/}
-      {/*          allowClear*/}
-      {/*        >*/}
-      {/*      <Option value={1}>一張就好：）</Option>*/}
-      {/*      <Option value={2}>兩張，謝謝</Option>*/}
-      {/*  </Select>*/}
-      {/*      </Form.Item>*/}
-      {/*    ) : null*/}
-      {/*  }*/}
-      {/*</Form.Item>*/}
-      <Form.Item name="Veggie" label="你吃素嗎？" rules={[{ required: true }]}>
-        <Select
-          placeholder="吃素嗎？還是今天要吃肉一下？"
-          onChange={isVeggie}
-          allowClear
-        >
-          <Option value="是">我吃素就好，謝謝</Option>
-          <Option value="否">不管了，今天吃肉</Option>
-        </Select>
-      </Form.Item>
-      <ButtonContainer>
-        <Button type="primary" htmlType="submit">
-            勇敢送出
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          打掉重練
-        </Button>
-      </ButtonContainer>
-    </Form>
+            <Option value="是">我吃素就好，謝謝</Option>
+            <Option value="否">不管了，今天吃肉</Option>
+          </Select>
+        </Form.Item>
+        <ButtonContainer>
+          <Button type="primary" htmlType="submit">
+              勇敢送出
+          </Button>
+          <Button htmlType="button" onClick={onReset}>
+            打掉重練
+          </Button>
+        </ButtonContainer>
+        </Form>
+      </>
   );
 }
 
 export default WeddingForm;
+
+const Text = styled.p`
+  margin-top: 5px;
+`
 
 const ButtonContainer = styled.div`
   display: flex;
