@@ -63,7 +63,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
     }
 
     const handleVideoError = () => {
-        handleVideo()
+        handleVideo();
         const video = videoRef.current;
         let startPlayPromise = video?.play();
 

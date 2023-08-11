@@ -28,7 +28,7 @@ const Letter = styled.span<{
     Index: number;
     isVideoReady: boolean;
 }>`
-  color: ${props => props.isVideoReady ? '#000' : 'transparent'};
+  color: ${props => props.isVideoReady ? '#000' : '#fff'};
   transition: color .2s ease-out;
   transition-delay: ${props => props.Index * .1}s;
 `
