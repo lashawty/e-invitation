@@ -43,16 +43,32 @@ const WeddingForm = ({
   //   }
   // };
 
+     const isVeggieTooMany = () => {
+      const total = form.getFieldValue("Number");
+      const veggieNumber = form.getFieldValue("Veggie")
+      if(veggieNumber > total) {
+        alert('會不會太多人吃素')
+        form.setFieldsValue({
+          Veggie: null,
+        })
+      }
+    };
+
   const isVeggie = (value: string) => {
     switch (value) {
-      case '是':
-        form.setFieldsValue({ Veggie: '是' });
+      case '0':
+        form.setFieldsValue({ Veggie: '0' });
         break;
-      case '否':
-        form.setFieldsValue({ Veggie: '否' });
+      case '1':
+        form.setFieldsValue({ Veggie: '1' });
+        break;
+      case '2':
+        form.setFieldsValue({ Veggie: '2' });
         break;
       default:
     }
+
+      isVeggieTooMany()
   };
 
   const onFinish = (values: any) => {
@@ -141,14 +157,15 @@ const WeddingForm = ({
         {/*    ) : null*/}
         {/*  }*/}
         {/*</Form.Item>*/}
-        <Form.Item name="Veggie" label="你吃素嗎？" rules={[{ required: true }]}>
+        <Form.Item name="Veggie" label="今天幾位吃素？" rules={[{ required: true }]}>
           <Select
             placeholder="吃素嗎？還是今天要吃肉一下？"
             onChange={isVeggie}
             allowClear
           >
-            <Option value="是">我吃素就好，謝謝</Option>
-            <Option value="否">不管了，今天吃肉</Option>
+            <Option value="0">沒在跟你吃素</Option>
+            <Option value="1">🥬 x 1</Option>
+            <Option value="2">🥬 x 2</Option>
           </Select>
         </Form.Item>
         <ButtonContainer>
