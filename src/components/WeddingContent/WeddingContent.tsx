@@ -72,7 +72,7 @@ const Video = styled.video`
   top: 0;
   left: 0;
   width: 100%;
-  &-webkit-media-controls{
+  &-webkit-media-controls-play-button{
     display: none;
   }
 `
