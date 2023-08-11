@@ -99,9 +99,7 @@ const WeddingForm = () => {
             allowClear
           >
             <Option value={1}>林北一位</Option>
-            <Option value={2}>雙人成行</Option>
-            <Option value={3}>三隻小豬</Option>
-            <Option value={4}>不好意思，四個人會不會太多？</Option>
+            <Option value={2}>我要攜伴</Option>
         </Select>
       </Form.Item>
       <Form.Item name="Children" label="是否需要兒童座椅？" rules={[{ required: true }]}>
