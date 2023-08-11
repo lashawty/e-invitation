@@ -14,22 +14,19 @@ type TVideo = HTMLVideoElement | null
 interface IVideoComponentProps {
     video: TVideo,
 }
-// interface ITransparentVideoProps {
-//     filePath: string,
-// }
+interface IModalState {
+    isOpen: boolean;
+    title: string;
+    content: ReactNode | null;
+}
+
+const initialModalState: IModalState = {
+    isOpen: false,
+    title: '',
+    content: null
+};
 
 const VideoMesh = ({video}: IVideoComponentProps) => {
-    // const windowWidth = useWindowSize()
-    // const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
-    // const texture = useVideoTexture(videoUrl);
-    // const three = useThree();
-    // const {width, height} = three.viewport;
-    // return(
-    //     <mesh>
-    //         <meshBasicMaterial map={texture} toneMapped={false} needsUpdate={true}/>
-    //         <planeGeometry args={[width, height, 1]}></planeGeometry>
-    //     </mesh>
-    // )
     if(video === null) return null;
 
     // 載入影片紋理
@@ -50,66 +47,51 @@ const VideoMesh = ({video}: IVideoComponentProps) => {
     )
 }
 
-// const TransparentVideo = ({filePath}: ITransparentVideoProps) => {
-//     const videoRef = useRef<TVideo>(null);
-//     const [isVideoReady, setIsVideoReady] = useState(false);
-//     useEffect(()=>{
-//         if(videoRef) {
-//             setIsVideoReady(true);
-//         }
-//     }, [videoRef])
-//
-//     return (
-//         <Container>
-//             <video src={filePath} ref={videoRef} autoPlay={true} muted={true} loop={true}></video>
-//             <Canvas gl={{antialias: false}}>
-//                 {isVideoReady && <VideoComponent video={videoRef.current}/>}
-//             </Canvas>
-//         </Container>
-//     );
-// };
-
 
 const WeddingContent = () => {
     const windowWidth = useWindowSize()
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalTitle, setModalTitle] = useState('');
-    const [modalContent, setModalContent] = useState<null | ReactNode>(null);
     const videoRef = useRef<TVideo>(null);
     const [isVideoReady, setIsVideoReady] = useState(false);
-
+    const [modalState, setModalState] = useState(initialModalState);
     useEffect(()=>{
         if(videoRef) {
-            setIsVideoReady(true);
+            videoRef?.current?.addEventListener('loadedmetadata', () => {
+                setIsVideoReady(true);
+                videoRef?.current?.play();
+            })
         }
     }, [videoRef])
     const showModal = (title: string, content: ReactNode) => {
-    setIsModalOpen(true);
-    setModalTitle(title);
-    setModalContent(content);
+        setModalState({
+            isOpen: true,
+            title,
+            content,
+        })
     };
     const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
     const closeModal = () => {
-    setIsModalOpen(false);
+        setModalState({
+            ...modalState,
+            isOpen: false,
+        })
     };
 
     return (
     <TitleContainer>
         <Video src={videoUrl} ref={videoRef} autoPlay={true} muted={true} loop={true}></Video>
-      <Canvas>
-        <Sparkles />
-          {isVideoReady && <VideoMesh video={videoRef.current}/>}
-      </Canvas>
-      
 
-      <SvgContainer>
-        <FormOutlined onClick={()=> showModal('婚禮表單', <WeddingForm />)}/>
-        {/*<CalendarOutlined onClick={()=> showModal('婚禮資訊', <p>圖片</p>)}/>*/}
-        {/*<YoutubeOutlined onClick={()=> showModal('PlayList', <IFrame />)}/>*/}
-      </SvgContainer>
-      <Modal title={modalTitle} open={isModalOpen} onCancel={closeModal} footer={null}>
-        {modalContent}
-      </Modal>
+        <Canvas>
+            <Sparkles />
+            {isVideoReady && <VideoMesh video={videoRef.current}/>}
+        </Canvas>
+
+        <SvgContainer>
+            <FormOutlined onClick={()=> showModal('婚禮表單', <WeddingForm />)}/>
+        </SvgContainer>
+
+        <Modal title={modalState.title} open={modalState.isOpen} onCancel={closeModal} footer={null}>
+            {modalState.content}
+        </Modal>
     </TitleContainer>
   )
 }
