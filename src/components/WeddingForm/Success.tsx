@@ -2,7 +2,7 @@ import styled from 'styled-components';
 const Success = () => {
     return (
         <>
-            <Title>感謝你的填寫 👍🏻</Title>
+            <Title>表單已送出</Title>
             <Text>有任何問題，請直接聯繫我們  💁🏻‍♂️</Text>
         </>
     )
