@@ -5,7 +5,7 @@ import {Modal} from 'antd';
 import {FormOutlined} from '@ant-design/icons';
 import WeddingForm from '../WeddingForm/WeddingForm';
 import {Canvas, useThree} from '@react-three/fiber'
-import useWindowSize from '../../hooks/useWindowSize';
+// import useWindowSize from '../../hooks/useWindowSize';
 import {VideoTexture} from 'three';
 import {vertexShader, fragmentShader} from './shader.ts';
 
@@ -49,10 +49,14 @@ const VideoMesh = ({video}: IVideoComponentProps) => {
 
 
 const WeddingContent = () => {
-    const windowWidth = useWindowSize()
+    // const windowWidth = useWindowSize();
+    // const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
+    const videoUrl = './video/bg-pc.MP4';
     const videoRef = useRef<TVideo>(null);
     const [isVideoReady, setIsVideoReady] = useState(false);
     const [modalState, setModalState] = useState(initialModalState);
+
+
     useEffect(()=>{
         if(videoRef) {
             videoRef?.current?.addEventListener('loadedmetadata', () => {
@@ -60,7 +64,9 @@ const WeddingContent = () => {
                 videoRef?.current?.play();
             })
         }
-    }, [videoRef])
+    }, [videoRef]);
+
+
     const showModal = (title: string, content: ReactNode) => {
         setModalState({
             isOpen: true,
@@ -68,7 +74,8 @@ const WeddingContent = () => {
             content,
         })
     };
-    const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mov';
+
+
     const closeModal = () => {
         setModalState({
             ...modalState,
