@@ -63,6 +63,7 @@ const WeddingContent = ({handleVideo}:IProps) => {
     }
 
     const handleVideoError = () => {
+        setIsVideoError(true)
         const video = videoRef.current;
         let startPlayPromise = video?.play();
 
@@ -73,7 +74,8 @@ const WeddingContent = ({handleVideo}:IProps) => {
                 })
                 .catch((error) => {
                     if (error.name === "NotAllowedError") {
-                        setIsVideoError(true)
+                        // setIsVideoError(true)/
+                        console.log('not allowed');
                     }
                 });
         }
@@ -90,8 +92,8 @@ const WeddingContent = ({handleVideo}:IProps) => {
             loop={true}
             controls={false}
             onPlay={handleVideo}
-            onLoadedMetadata={handleVideoError}
             isVideoError={isVideoError}
+            onPause={handleVideoError}
         />
         <Canvas>
             <Sparkles />
