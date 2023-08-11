@@ -72,6 +72,9 @@ const Video = styled.video`
   top: 0;
   left: 0;
   width: 100%;
+  &-webkit-media-controls{
+    display: none;
+  }
 `
 
 const SvgContainer = styled.div`
