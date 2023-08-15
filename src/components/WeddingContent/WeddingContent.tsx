@@ -1,10 +1,10 @@
-import styled from 'styled-components';
 import {useState, ReactNode, useRef} from 'react';
+import styled from 'styled-components';
 import {Sparkles} from '@react-three/drei'
 import {Modal} from 'antd';
 import {FormOutlined} from '@ant-design/icons';
-import WeddingForm from '../WeddingForm/WeddingForm';
 import {Canvas} from '@react-three/fiber'
+import WeddingForm from '../WeddingForm/WeddingForm';
 import useWindowSize from '../../hooks/useWindowSize';
 import Success from '../WeddingForm/Success.tsx';
 
@@ -16,11 +16,11 @@ interface IModalState {
     isFormSubmit: boolean;
 }
 
-
-
 interface IProps {
     handleVideo: () => void
 }
+
+
 const WeddingContent = ({handleVideo}:IProps) => {
     const windowWidth = useWindowSize();
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -121,9 +121,6 @@ const Video = styled.video<{
   left: 0;
   width: 100%;
   visibility: ${props => props.isVideoError ? 'hidden' : 'visible'};
-  .media-controls-play-button{
-    display: none;
-  }
 `
 
 const SvgContainer = styled.div`

@@ -49,18 +49,10 @@ body,
     left: 0;
     width: 100%;
     height: 100%;
-	background: #000;
     overflow: hidden;
 }
 
-/* 隐藏 video 播放按钮 */
-video .media-controls-container{
-	display: none !important;
-}
-
-
-
 @font-face {
 	font-family: 'English';
-	src: url(../fonts/english.otf);
+	src: url('../fonts/english.otf');
 }
