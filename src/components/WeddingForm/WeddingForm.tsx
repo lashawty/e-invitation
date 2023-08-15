@@ -1,6 +1,6 @@
 import { Button, Form, Input, Select } from 'antd';
 import styled from 'styled-components';
-
+import {useState} from 'react';
 interface IProps {
     onSuccess: () => void,
 }
@@ -17,12 +17,14 @@ const WeddingForm = ({
     onSuccess
 }: IProps) => {
     const [form] = Form.useForm();
+    const [is2Available, setIs2Available] = useState(false);
 
-    const isVeggieTooMany = () => {
+    const getTotal = () => {
         const total = form.getFieldValue("Number");
-        const veggieNumber = form.getFieldValue("Veggie");
-        if(veggieNumber > total) {
-            alert('會不會太多人吃素');
+        if(total > 1) {
+            setIs2Available(true);
+        } else {
+            setIs2Available(false);
             form.setFieldsValue({Veggie: null});
         }
     };
@@ -40,8 +42,6 @@ const WeddingForm = ({
             break;
           default:
         }
-
-        isVeggieTooMany()
     };
 
     const onFinish = (values: any) => {
@@ -69,7 +69,8 @@ const WeddingForm = ({
 
     return (
         <>
-            <Text>日期：2023.10.15</Text>
+            <Text>日期：2023.10.15 星期日</Text>
+            <Text>時間：18:00</Text>
             <Text>地點：心之芳庭</Text>
             <Form
                 {...layout}
@@ -83,31 +84,32 @@ const WeddingForm = ({
                   <Input placeholder='報上名來！'/>
                 </Form.Item>
 
-                <Form.Item name="Number" label="今天幾位用餐？" rules={[{ required: true }]}>
+                <Form.Item name="Number" label="總共幾位用餐？" rules={[{ required: true }]}>
                   <Select
-                      placeholder="請選擇人數"
+                      placeholder="請選擇總人數"
                       allowClear
+                      onChange={getTotal}
                   >
-                      <Option value={1}>林北一位</Option>
-                      <Option value={2}>我要攜伴</Option>
+                      <Option value={1}>林北一位 👤</Option>
+                      <Option value={2}>我要攜伴 👥</Option>
                   </Select>
                 </Form.Item>
 
-                <Form.Item name="Veggie" label="今天幾位吃素？" rules={[{ required: true }]}>
+                <Form.Item name="Veggie" label="請問幾位吃素？" rules={[{ required: true }]}>
                     <Select
-                        placeholder="吃素嗎？還是今天要吃肉一下？"
+                        placeholder="請選擇素食者人數"
                         onChange={isVeggie}
                         allowClear
                     >
-                        <Option value="0">沒在跟你吃素</Option>
+                        <Option value="0">沒在跟你吃素 🍗</Option>
                         <Option value="1">🥬 x 1</Option>
-                        <Option value="2">🥬 x 2</Option>
+                        {is2Available && <Option value="2">🥬 x 2</Option>}
                     </Select>
                 </Form.Item>
 
                 <ButtonContainer>
                     <Button type="primary" htmlType="submit">勇敢送出</Button>
-                    <Button htmlType="button" onClick={onReset}>打掉重練</Button>
+                    <Button htmlType="button" onClick={onReset}>重寫一遍</Button>
                 </ButtonContainer>
             </Form>
         </>
