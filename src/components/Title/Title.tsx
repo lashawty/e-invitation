@@ -62,6 +62,6 @@ const Container = styled.div<{
   width: 100vw;
   height: 100vh;
   pointer-events: ${props => props.isVideoReady ? 'none' : 'auto'};
-  background: ${props => props.isVideoReady ? 'transparent' : '#b1c086'};
+  background: ${props => props.isVideoReady ? 'transparent' : '#6a6a45'};
   transition: background 2s 4s;
 `
