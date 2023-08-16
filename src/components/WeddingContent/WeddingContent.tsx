@@ -24,7 +24,6 @@ interface IProps {
 const WeddingContent = ({handleVideo}:IProps) => {
     const windowWidth = useWindowSize();
     const videoRef = useRef<HTMLVideoElement | null>(null);
-    const bgUrl = Number(windowWidth) > 992 ? './image/bg-pc.gif' : './image/bg-mobile.gif';
     const videoUrl = Number(windowWidth) > 992 ? './video/bg-pc.MP4' : './video/bg-mobile.mp4';
     const initialModalState: IModalState = {
         isOpen: false,
@@ -82,7 +81,6 @@ const WeddingContent = ({handleVideo}:IProps) => {
             src={videoUrl}
             autoPlay={true}
             playsInline={true}
-            poster={bgUrl}
             muted={true}
             loop={true}
             controls={false}
