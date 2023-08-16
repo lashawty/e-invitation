@@ -52,13 +52,11 @@ const WeddingForm = ({
             if (values.hasOwnProperty(key)) formData.append(key, values[key]);
         }
 
-    fetch(googleSheetUrl, {
-        method: "POST",
-        body: formData,
-    })
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(error => console.log(error))
+        fetch(googleSheetUrl, {method: "POST", body: formData,})
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+
         form.resetFields();
         onSuccess();
     };

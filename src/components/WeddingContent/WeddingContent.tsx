@@ -69,13 +69,9 @@ const WeddingContent = ({handleVideo}:IProps) => {
 
         if (startPlayPromise !== undefined) {
             startPlayPromise
-                .then(() => {
-                    console.log('video is playing!')
-                })
+                .then(() => console.log('video is playing!'))
                 .catch((error) => {
-                    if (error.name === "NotAllowedError") {
-                        setIsVideoError(true)
-                    }
+                    if (error.name === "NotAllowedError") setIsVideoError(true)
                 });
         }
     }
