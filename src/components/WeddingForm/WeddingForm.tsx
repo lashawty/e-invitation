@@ -18,7 +18,7 @@ const WeddingForm = ({
 }: IProps) => {
     const [form] = Form.useForm();
     const [is2Available, setIs2Available] = useState(false);
-
+    const [isHidden, setIsHidden] = useState(true);
     const getTotal = () => {
         const total = form.getFieldValue("Number");
         if(total > 1) {
@@ -27,6 +27,8 @@ const WeddingForm = ({
             setIs2Available(false);
             form.setFieldsValue({Veggie: null});
         }
+
+        if(total) setIsHidden(false);
     };
 
     const isVeggie = (value: string) => {
@@ -63,6 +65,7 @@ const WeddingForm = ({
 
     const onReset = () => {
         form.resetFields();
+        setIsHidden(true);
     };
 
     const validateMessages = {required: "這裡沒填到 回來重填！"}
@@ -95,7 +98,7 @@ const WeddingForm = ({
                   </Select>
                 </Form.Item>
 
-                <Form.Item name="Veggie" label="請問幾位吃素？" rules={[{ required: true }]}>
+                <Form.Item name="Veggie" label="請問幾位吃素？" rules={[{ required: true }]} hidden={isHidden}>
                     <Select
                         placeholder="請選擇素食者人數"
                         onChange={isVeggie}
